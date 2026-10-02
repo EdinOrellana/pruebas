@@ -1,0 +1,16 @@
+/* ==========================================================================
+   Sistema de diseño CPX — punto de entrada.
+   Importa, en orden, los tokens, el reset base, el shell de la app y el kit
+   de componentes compartidos. No agregues estilos nuevos directamente aqui:
+   - Variables/paleta         -> tokens.css
+   - Reset / utilidades base  -> base.css
+   - Sidebar/header/layout    -> shell.css
+   - Componentes compartidos  -> kit.css (botones, modal, tabla, formularios...)
+   - Algo especifico de TU modulo -> el CSS/CSS Module dentro de tu carpeta
+     en pages/, no aqui.
+   ========================================================================== */
+
+@import "./tokens.css";
+@import "./base.css";
+@import "./shell.css";
+@import "./kit.css";

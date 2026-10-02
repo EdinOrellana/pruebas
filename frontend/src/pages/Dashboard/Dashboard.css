@@ -1,0 +1,91 @@
+/* Estilos propios del modulo Dashboard. No mover a styles/kit.css a menos
+   que otro modulo tambien vaya a usar exactamente esta tarjeta. */
+
+.cpx-dashboard__subtitle {
+  margin: 0 0 20px;
+  font-size: 13px;
+  color: var(--cpx-text-secondary);
+}
+
+.cpx-dashboard__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 14px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--cpx-text-secondary);
+  cursor: pointer;
+}
+
+.cpx-dashboard__back:hover {
+  color: var(--cpx-accent);
+}
+
+.cpx-dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.cpx-module-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+  background: var(--cpx-surface);
+  border: 1.5px solid var(--cpx-border);
+  border-radius: var(--cpx-radius-lg);
+  box-shadow: var(--cpx-shadow-soft);
+  padding: 20px;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--cpx-font-sans);
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.cpx-module-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--cpx-accent);
+}
+
+.cpx-module-card__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--cpx-radius-sm);
+  background: var(--cpx-accent-sub);
+  color: var(--cpx-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cpx-module-card__title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cpx-text-primary);
+}
+
+.cpx-module-card__desc {
+  font-size: 12px;
+  color: var(--cpx-text-secondary);
+  line-height: 1.4;
+}
+
+.cpx-module-card__count {
+  font-family: var(--cpx-font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--cpx-text-primary);
+}
+
+.cpx-module-card__count-label {
+  font-size: 11px;
+  color: var(--cpx-text-secondary);
+}

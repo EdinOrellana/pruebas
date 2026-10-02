@@ -1,0 +1,825 @@
+/* ==========================================================================
+   ARCHIVO COMPARTIDO -- ver CONTRIBUTING.md.
+   Kit de UI compartido del sistema CPX (botones, modal, tabla, formularios,
+   badges, toasts, etc). Estas clases las usan TODOS los modulos: si tu
+   vista necesita algo muy especifico que no encaja aqui, agrega una prop/
+   variante reutilizable o crea el CSS dentro de tu propia carpeta en
+   pages/, no agregues reglas sueltas a este archivo.
+   ========================================================================== */
+
+/* ============================== Botones ================================ */
+
+.cpx-btn {
+  font-family: var(--cpx-font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: var(--cpx-radius-input);
+  padding: 8px 22px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: filter 0.15s ease, background 0.15s ease;
+}
+
+.cpx-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.cpx-btn--primary {
+  background: var(--cpx-accent);
+  color: #fff;
+}
+
+.cpx-btn--primary:not(:disabled):hover {
+  filter: brightness(1.08);
+}
+
+.cpx-btn--secondary {
+  background: transparent;
+  color: var(--cpx-text-secondary);
+  border: 1px solid var(--cpx-border);
+}
+
+.cpx-btn--secondary:not(:disabled):hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.cpx-btn--danger {
+  background: var(--cpx-danger);
+  color: #fff;
+  box-shadow: 0 1px 3px rgba(255, 59, 48, 0.25);
+}
+
+.cpx-btn--danger:not(:disabled):hover {
+  filter: brightness(1.08);
+}
+
+.cpx-btn--success {
+  background: #10b981;
+  color: #fff;
+  box-shadow: 0 1px 3px rgba(16, 185, 129, 0.25);
+}
+
+.cpx-btn--success:not(:disabled):hover {
+  background: #059669;
+  filter: brightness(1.05);
+}
+
+/* ============================== IconBtn ================================= */
+
+.cpx-iconbtn {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--cpx-radius-input);
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+  flex-shrink: 0;
+}
+
+.cpx-iconbtn:hover:not(:disabled) {
+  opacity: 0.75;
+}
+
+.cpx-iconbtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.cpx-iconbtn--ghost {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--cpx-text-secondary);
+}
+
+.cpx-iconbtn--primary {
+  background: var(--cpx-accent);
+  color: #fff;
+}
+
+.cpx-iconbtn--danger {
+  background: color-mix(in srgb, var(--cpx-danger) 18%, transparent);
+  color: var(--cpx-danger);
+}
+
+.cpx-iconbtn--success {
+  background: color-mix(in srgb, var(--cpx-success) 18%, transparent);
+  color: var(--cpx-success);
+}
+
+/* ================================= SH ==================================== */
+
+.cpx-sh {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--cpx-border);
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.cpx-sh__title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--cpx-text-primary);
+}
+
+.cpx-sh__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* =============================== Modal =================================== */
+
+.cpx-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+.cpx-modal {
+  width: 100%;
+  max-width: 480px;
+  max-height: 88vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--cpx-surface);
+  border-radius: var(--cpx-radius-modal);
+  box-shadow: var(--cpx-shadow-strong);
+  padding: 22px;
+  box-sizing: border-box;
+}
+
+.cpx-modal,
+.cpx-modal * {
+  box-sizing: border-box;
+}
+
+.cpx-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.cpx-modal__title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--cpx-text-primary);
+}
+
+.cpx-modal .cpx-field__input {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+
+/* ========================= Dialogo de confirmacion ====================== */
+
+.cpx-confirm-dialog__message {
+  margin: 0 0 20px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--cpx-text-secondary);
+}
+
+.cpx-confirm-dialog__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* =============================== Card ================================== */
+
+.cpx-card {
+  background: var(--cpx-surface);
+  border: 1px solid var(--cpx-border);
+  border-radius: var(--cpx-radius-lg);
+  box-shadow: var(--cpx-shadow-soft);
+  padding: 20px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+}
+
+.cpx-card__title {
+  margin: 0 0 16px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--cpx-text-primary);
+}
+
+/* ============================ Form field ============================== */
+
+.cpx-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 14px;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* Fila de campos: compacta, cada input a su ancho, se envuelve si no cabe. */
+.cpx-form-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 14px 18px;
+  margin-bottom: 16px;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.cpx-form-row .cpx-field {
+  margin-bottom: 0;
+  flex: 1 1 200px;
+}
+
+/* Rejilla de formulario: tantas columnas como quepan (minimo 150px cada una).
+   Los campos ocupan su celda completa, ignorando el ancho por caracteres. */
+.cpx-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px 16px;
+  align-items: start;
+  margin-bottom: 16px;
+  width: 100%;
+  min-width: 0;
+}
+
+.cpx-form-grid .cpx-field {
+  margin-bottom: 0;
+  width: 100% !important;
+  min-width: 0;
+}
+
+/* Ocupa toda la fila de la rejilla */
+.cpx-form-grid .cpx-grid-full {
+  grid-column: 1 / -1;
+}
+
+/* Fila de captura de lineas: articulo, descripcion, unidad, cantidad, precio, boton */
+.cpx-form-grid--linea {
+  grid-template-columns: minmax(90px, 0.8fr) minmax(160px, 2.2fr) minmax(150px, 1.5fr) minmax(90px, 0.8fr) minmax(110px, 1fr) auto;
+  align-items: end;
+}
+
+/* Fila principal: campo ancho (2/3) + campo angosto (1/3) */
+.cpx-form-grid--principal {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+}
+
+/* Campo angosto (1/3, ej. un monto) + campo ancho (2/3) */
+.cpx-form-grid--angosto-ancho {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+}
+
+/* Un solo campo a todo el ancho */
+.cpx-form-grid--completo {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (max-width: 760px) {
+  .cpx-form-grid--linea {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .cpx-form-grid--principal,
+  .cpx-form-grid--angosto-ancho {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.cpx-field__label {
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--cpx-text-secondary);
+}
+
+/* El input llena el ancho del .cpx-field (que define su ancho). */
+.cpx-field__input {
+  font-family: var(--cpx-font-sans);
+  font-size: 14px;
+  color: var(--cpx-text-primary);
+  background: var(--cpx-input-bg);
+  border: 1.5px solid var(--cpx-input-border);
+  border-radius: var(--cpx-radius-input);
+  padding: 9px 12px;
+  outline: none;
+  transition: border-color 0.15s ease, background 0.15s ease;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.cpx-field__input:focus {
+  border-color: var(--cpx-accent);
+  background: #fff;
+}
+
+.cpx-field__input--error {
+  border-color: var(--cpx-danger) !important;
+  background: rgba(255, 59, 48, 0.04) !important;
+}
+
+.cpx-field__hint {
+  margin-top: 5px;
+  font-size: 11px;
+  color: var(--cpx-text-muted);
+}
+
+.cpx-field__error {
+  margin-top: 5px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--cpx-danger);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* =============================== Tabla ================================ */
+
+.cpx-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cpx-table__th {
+  text-align: left;
+  padding: 10px 16px;
+  background: rgba(0, 0, 0, 0.015);
+  border-bottom: 1px solid var(--cpx-border);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--cpx-text-muted);
+  white-space: nowrap;
+}
+
+.cpx-table__td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--cpx-border);
+  font-size: 14px;
+  color: var(--cpx-text-primary);
+  text-align: left;
+}
+
+.cpx-table__cell--num {
+  text-align: right;
+  font-family: var(--cpx-font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.cpx-table__row:hover {
+  background: rgba(0, 0, 0, 0.018);
+}
+
+/* ============================== Badges =============================== */
+
+.cpx-badge {
+  display: inline-block;
+  border-radius: var(--cpx-radius-pill);
+  padding: 2px 9px;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+/* ================================ KPI =================================== */
+
+.cpx-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.cpx-kpi-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--cpx-surface);
+  border: 1.5px solid var(--cpx-border);
+  border-radius: var(--cpx-radius-lg);
+  box-shadow: var(--cpx-shadow-soft);
+  padding: 16px 18px;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--cpx-font-sans);
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.cpx-kpi-card:hover {
+  transform: translateY(-1px);
+}
+
+.cpx-kpi-card--active {
+  border-width: 2px;
+}
+
+.cpx-kpi-card__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--cpx-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cpx-kpi-card__value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--cpx-text-primary);
+  font-family: var(--cpx-font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.cpx-kpi-card__label {
+  font-size: 12px;
+  color: var(--cpx-text-secondary);
+  margin-top: 2px;
+}
+
+/* =============================== Buscador ================================ */
+
+.cpx-search {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 200px;
+  padding: 6px 10px;
+  border-radius: var(--cpx-radius-input);
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--cpx-text-muted);
+  flex-shrink: 0;
+}
+
+.cpx-search input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 13px;
+  width: 100%;
+  color: var(--cpx-text-primary);
+  font-family: var(--cpx-font-sans);
+}
+
+.cpx-search input::placeholder {
+  color: var(--cpx-text-muted);
+}
+
+.cpx-search__clear {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--cpx-text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.cpx-search__clear:hover {
+  color: var(--cpx-text-secondary);
+}
+
+/* ============================== Alertas ============================== */
+
+.cpx-alert--error {
+  background: rgba(255, 59, 48, 0.12);
+  color: var(--cpx-danger);
+  border: 1px solid rgba(255, 59, 48, 0.25);
+  border-radius: var(--cpx-radius-sm);
+  padding: 10px 14px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  word-break: break-word;
+}
+
+.cpx-alert__close {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: var(--cpx-radius-sm);
+  opacity: 0.75;
+  transition: opacity 0.15s ease, background 0.15s ease;
+  flex-shrink: 0;
+}
+
+.cpx-alert__close:hover {
+  opacity: 1;
+  background: rgba(255, 59, 48, 0.18);
+}
+
+/* ================================ Spinner ================================ */
+
+@keyframes cpx-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.cpx-spin {
+  animation: cpx-spin 0.8s linear infinite;
+}
+
+/* ==================== Combobox con Búsqueda (SearchableSelect) =========== */
+
+.cpx-select-container {
+  position: relative;
+  width: 100%;
+}
+
+.cpx-select-trigger {
+  width: 100%;
+  padding: 9px 12px;
+  background: var(--cpx-input-bg);
+  border: 1.5px solid var(--cpx-input-border);
+  border-radius: var(--cpx-radius-input);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--cpx-text-primary);
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.cpx-select-trigger:focus,
+.cpx-select-trigger--open {
+  border-color: var(--cpx-accent);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.12);
+}
+
+.cpx-select-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-radius: var(--cpx-radius-sm);
+  border: 1px solid var(--cpx-border);
+  box-shadow: var(--cpx-shadow-strong);
+  z-index: 9999;
+  overflow: hidden;
+  animation: cpx-fade-in 0.15s ease-out;
+}
+
+.cpx-select-search-box {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--cpx-border);
+  background: #fafafa;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cpx-select-search-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 13px;
+  color: var(--cpx-text-primary);
+}
+
+.cpx-select-list {
+  max-height: 220px;
+  overflow-y: auto;
+  list-style: none;
+  margin: 0;
+  padding: 4px;
+}
+
+.cpx-select-item {
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  transition: background 0.1s ease;
+}
+
+.cpx-select-item:hover,
+.cpx-select-item--selected {
+  background: var(--cpx-accent-sub);
+}
+
+.cpx-select-item--selected {
+  font-weight: 600;
+  color: var(--cpx-accent);
+}
+
+.cpx-select-empty {
+  padding: 16px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--cpx-text-muted);
+}
+
+/* ==================== Notificaciones Emergentes (Toasts) ================= */
+/*
+ * Nota: antes habia una segunda definicion de .cpx-toast (con position:
+ * fixed y fondo verde fijo) mas abajo en el theme.css original, que
+ * pisaba esta por cascada CSS e ignoraba el tipo (error/warning/etc).
+ * Se elimino por ser un residuo de un merge mal resuelto: esta es la
+ * unica definicion real, usada por ToastProvider/useToast() en Toast.tsx.
+ */
+
+.cpx-toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.cpx-toast {
+  pointer-events: auto;
+  min-width: 280px;
+  max-width: 420px;
+  padding: 12px 16px;
+  background: #ffffff;
+  border-radius: var(--cpx-radius-sm);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  animation: cpx-slide-in 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  border-left: 4px solid var(--cpx-accent);
+}
+
+.cpx-toast--success {
+  border-left-color: #10b981;
+}
+
+.cpx-toast--error {
+  border-left-color: var(--cpx-danger);
+}
+
+.cpx-toast--warning {
+  border-left-color: var(--cpx-warning);
+}
+
+.cpx-toast--info {
+  border-left-color: var(--cpx-accent);
+}
+
+.cpx-toast__content {
+  flex: 1;
+}
+
+.cpx-toast__title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cpx-text-primary);
+  margin-bottom: 2px;
+}
+
+.cpx-toast__message {
+  font-size: 12px;
+  color: var(--cpx-text-secondary);
+}
+
+.cpx-toast__close {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--cpx-text-muted);
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.cpx-toast__close:hover {
+  color: var(--cpx-text-primary);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+@keyframes cpx-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes cpx-fade-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==================== Pestañas de Visibilidad Condicional ================ */
+
+.cpx-tabs {
+  display: inline-flex;
+  background: rgba(0, 0, 0, 0.04);
+  padding: 3px;
+  border-radius: var(--cpx-radius-sm);
+  gap: 2px;
+}
+
+.cpx-tab {
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--cpx-text-secondary);
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cpx-tab:hover {
+  color: var(--cpx-text-primary);
+}
+
+.cpx-tab--active {
+  background: #ffffff;
+  color: var(--cpx-text-primary);
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* ==================== Primeros Pasos del Flujo ============================ */
+
+.cpx-guide-banner {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border: 1px solid #bae6fd;
+  border-radius: var(--cpx-radius-lg);
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.06);
+}
+
+.cpx-guide-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.cpx-guide-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 10px 14px;
+  border-radius: var(--cpx-radius-sm);
+  border: 1px solid rgba(186, 230, 253, 0.5);
+}
+
+.cpx-guide-step__num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--cpx-accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}

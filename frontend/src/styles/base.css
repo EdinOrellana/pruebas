@@ -1,0 +1,31 @@
+/* ==========================================================================
+   Reset base y utilidades globales. Casi nunca deberia cambiar: si un modulo
+   necesita un estilo propio, va en su carpeta (pages/X/X.css), no aqui.
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--cpx-bg-app);
+  color: var(--cpx-text-primary);
+  font-family: var(--cpx-font-sans);
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Utilidad: números / códigos en monoespaciada */
+.cpx-mono {
+  font-family: var(--cpx-font-mono);
+  font-variant-numeric: tabular-nums;
+}

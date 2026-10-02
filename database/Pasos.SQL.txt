@@ -1,0 +1,30 @@
+-- ============================================================================
+-- ORDEN DE EJECUCION DE LA BASE DE DATOS (de cero)
+-- ============================================================================
+--  (Opcional) 00_RESET_ESQUEMA.sql
+--        Elimina TODAS las tablas, la vista y los paquetes para empezar de
+--        cero (los IDs vuelven a 1). IRREVERSIBLE: solo en desarrollo/pruebas.
+--
+--   0. SCRIPT_GENERAL.sql
+--        Modelo completo del proyecto (62 tablas de todos los modulos).
+--
+--   1. DEPENDENCIAS_EXTERNAS/RUN_DEPENDENCIAS.sql      (correr DESDE esa carpeta)
+--        Tablas y datos de prueba de OTROS modulos de los que dependemos:
+--        Nomina (sucursales, empleados), Compras (proveedores) e
+--        Inventarios (articulos). Es TEMPORAL: cuando esos equipos se
+--        integren, se reemplaza por sus scripts reales.
+--        Ver DEPENDENCIAS_EXTERNAS/README.md
+--
+--   2. 00_MASTER_SETUP.sql
+--        Estructura y codigo de Cuentas por Pagar (tablas CP_*, vista y
+--        paquetes). Se detiene con un aviso si falta el paso 1.
+--
+--   3. RUN_ALL_SEEDS.sql                                (correr DESDE database/)
+--        Datos de prueba de Cuentas por Pagar (usa los procedimientos).
+--
+-- Para volver a cargar SOLO los datos de prueba (sin tocar tablas ni paquetes):
+--   00_VACIAR_DATOS.sql -> luego pasos 1, 2 (opcional) y 3.
+--
+-- Todos los pasos se pueden volver a correr: no borran datos ni duplican filas
+-- (excepto Movimientos de Caja Chica, que agrega movimientos en cada corrida).
+-- ============================================================================

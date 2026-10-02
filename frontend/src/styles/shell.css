@@ -1,0 +1,224 @@
+/* ==========================================================================
+   Shell de aplicacion: sidebar + header + barra de titulo + contenido.
+   Usado por AppShell.tsx. Nadie deberia necesitar tocar este archivo para
+   agregar un modulo nuevo (el sidebar se genera desde navigation.config.tsx).
+   ========================================================================== */
+
+.cpx-shell {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.cpx-sidebar {
+  width: clamp(180px, 20vw, 224px);
+  flex-shrink: 0;
+  background: var(--cpx-sidebar-bg);
+  color: var(--cpx-sidebar-text);
+  padding: 22px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.cpx-sidebar__brand {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 6px 12px 18px;
+  color: #fff;
+  word-break: break-word;
+}
+
+.cpx-sidebar__brand small {
+  display: block;
+  font-size: 11px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: 0.02em;
+  margin-top: 2px;
+}
+
+.cpx-sidebar__group-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.4);
+  padding: 8px 12px 6px;
+}
+
+.cpx-sidebar__group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cpx-sidebar__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: var(--cpx-radius-sm);
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  font-size: 14px;
+  border-left: 3px solid transparent;
+  transition: background 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cpx-sidebar__item svg {
+  flex-shrink: 0;
+}
+
+.cpx-sidebar__item:hover {
+  background: var(--cpx-sidebar-item-hover);
+  color: #fff;
+}
+
+.cpx-sidebar__item--active {
+  background: var(--cpx-sidebar-item-active);
+  color: #fff;
+  border-left-color: var(--cpx-accent);
+}
+
+.cpx-main {
+  flex: 1;
+  min-width: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.cpx-header {
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--cpx-border);
+  overflow: hidden;
+}
+
+.cpx-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--cpx-text-secondary);
+  white-space: nowrap;
+}
+
+.cpx-breadcrumbs svg {
+  color: var(--cpx-text-muted);
+}
+
+.cpx-header__spacer {
+  flex: 1;
+}
+
+.cpx-header__search {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex: 0 1 220px;
+  min-width: 120px;
+  padding: 6px 10px;
+  margin-right: 12px;
+  border-radius: var(--cpx-radius-input);
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--cpx-text-muted);
+}
+
+.cpx-header__search input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 13px;
+  width: 100%;
+  color: var(--cpx-text-primary);
+  font-family: var(--cpx-font-sans);
+}
+
+.cpx-header__search input::placeholder {
+  color: var(--cpx-text-muted);
+}
+
+.cpx-header__bell {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--cpx-radius-input);
+  border: none;
+  background: transparent;
+  color: var(--cpx-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.cpx-header__bell:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.cpx-header__bell-dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cpx-danger);
+  border: 1.5px solid #fff;
+}
+
+.cpx-page-title-bar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px;
+  background: var(--cpx-surface);
+  border-bottom: 1px solid var(--cpx-border);
+}
+
+.cpx-page-title-bar__title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--cpx-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cpx-page-title-bar__currency {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--cpx-text-secondary);
+  background: rgba(0, 0, 0, 0.04);
+  padding: 3px 9px;
+  border-radius: var(--cpx-radius-pill);
+  flex-shrink: 0;
+}
+
+.cpx-content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 24px 28px;
+}

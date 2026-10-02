@@ -1,0 +1,60 @@
+/* ==========================================================================
+   Sistema de diseño CPX — tokens del diseño ganador (equipo CxC / Figma Make).
+   Solo variables CSS (paleta, tipografía, radios, sombras). No agregar
+   clases ni estilos de componentes aqui: van en kit.css o en el CSS del
+   modulo correspondiente.
+   ========================================================================== */
+
+/* Fuente monoespaciada para números, montos y códigos. */
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap");
+
+:root {
+  /* Fondos y superficies */
+  --cpx-bg-app: #e8f0fe;
+  --cpx-surface: #ffffff;
+
+  /* Radios */
+  --cpx-radius-lg: 14px;   /* tarjetas / superficies */
+  --cpx-radius-sm: 10px;   /* elementos pequeños */
+  --cpx-radius-input: 8px; /* inputs y botones */
+  --cpx-radius-modal: 18px;
+  --cpx-radius-pill: 20px; /* badges / chips */
+
+  /* Sombras */
+  --cpx-shadow-soft: 0 2px 16px rgba(0, 0, 0, 0.06);
+  --cpx-shadow-strong: 0 4px 24px rgba(0, 0, 0, 0.09);
+
+  /* Sidebar */
+  --cpx-sidebar-bg: #0b1a38;
+  --cpx-sidebar-text: #ffffff;
+  --cpx-sidebar-item-active: rgba(255, 255, 255, 0.1);
+  --cpx-sidebar-item-hover: rgba(255, 255, 255, 0.06);
+
+  /* Texto */
+  --cpx-text-primary: #1d1d1f;
+  --cpx-text-secondary: #6e6e73;
+  --cpx-text-muted: #aeaeb2;
+
+  /* Bordes */
+  --cpx-border: rgba(0, 0, 0, 0.06);
+
+  /* Acentos */
+  --cpx-accent: #0071e3;
+  --cpx-accent-sub: #e8f1fb;
+  --cpx-accent-teal: #00a693;
+  --cpx-purple: #8b5cf6; /* uso futuro: impuestos y retenciones fiscales */
+
+  /* Estados */
+  --cpx-success: #34c759;
+  --cpx-warning: #ff9500;
+  --cpx-danger: #ff3b30;
+
+  /* Tipografía */
+  --cpx-font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Helvetica Neue", sans-serif;
+  --cpx-font-mono: "JetBrains Mono", "SF Mono", monospace;
+
+  /* Inputs */
+  --cpx-input-bg: rgba(0, 0, 0, 0.03);
+  --cpx-input-border: rgba(0, 0, 0, 0.06);
+}

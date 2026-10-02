@@ -1,0 +1,426 @@
+================================================================================
+GUÍA DE IMPLEMENTACIÓN Y DOCUMENTACIÓN DE NUEVOS COMPONENTES REUTILIZABLES (CPX)
+================================================================================
+Autor: Sistema de Diseño y Arquitectura Frontend CPX
+Ubicación: frontend/src/components/common/
+Fecha de Actualización: Septiembre 2026
+================================================================================
+
+ÍNDICE DE COMPONENTES:
+1. StatCard & StatGrid (Tarjetas de Métricas KPI Superiores)
+2. StatusBadge (Pill Badges de Estado con Indicador '●' / '○')
+3. Pagination (Control Integral de Paginación y Selector de Límites)
+4. TableSearchBar (Barra de Búsqueda en Una Sola Línea con Resultados)
+5. FilterDropdown (Filtro Desplegable con Buscador Interno y Conteo)
+6. HintTooltip (Icono de Ayuda '?' con Tooltip Flotante al Pasar el Mouse)
+7. GuideBanner (Banner de Primeros Pasos Dinámico y Colapsable)
+8. SearchableSelect (Selector con Búsqueda Predictiva e Iconos Integrados)
+9. FormField (Campo de Formulario con Soporte de Tooltip '?')
+
+--------------------------------------------------------------------------------
+IMPORTACIÓN CENTRALIZADA:
+--------------------------------------------------------------------------------
+Todos los componentes se encuentran exportados en 'frontend/src/components/common':
+
+import {
+  StatGrid,
+  StatCard,
+  StatusBadge,
+  Pagination,
+  TableSearchBar,
+  FilterDropdown,
+  HintTooltip,
+  GuideBanner,
+  SearchableSelect,
+  FormField,
+  Button,
+  Badge,
+  Card,
+  Modal,
+  SH,
+  IconBtn
+} from "../../components/common";
+
+
+================================================================================
+1. COMPONENTE: StatCard & StatGrid (Tarjetas KPI)
+================================================================================
+Archivos: frontend/src/components/common/StatCard.tsx
+
+DESCRIPCIÓN:
+Conjunto modular para renderizar tarjetas de métricas o indicadores clave (KPI) 
+con borde izquierdo coloreado de 4px, título superior, ícono de Lucide a la derecha, 
+cifra destacada en tipografía monoespaciada (con color personalizable) y subtítulo descriptivo inferior.
+
+PROPIEDADES (PROPS) - StatCard:
+- label (string) [Obligatorio]: Título o etiqueta superior de la métrica.
+- value (ReactNode) [Obligatorio]: Valor numérico o monto a desplegar en grande.
+- subtitle (string) [Opcional]: Texto explicativo inferior (ej. "En fondos operativos en sucursales").
+- icon (LucideIcon | ReactNode) [Opcional]: Componente de ícono de Lucide (Wallet, Users, CheckCircle2, etc.).
+- color ("accent" | "success" | "warning" | "danger" | "teal" | "purple" | "neutral") [Opcional]: Color del borde e icono (Default: "accent").
+- valueColor ("accent" | "success" | "warning" | "danger" | "teal" | "purple" | "neutral" | "primary" | string) [Opcional]: Color personalizado para la cifra.
+- className (string) [Opcional]: Clases CSS adicionales.
+- style (React.CSSProperties) [Opcional]: Estilos inline para el contenedor.
+
+PROPIEDADES (PROPS) - StatGrid:
+- children (ReactNode) [Obligatorio]: Tarjetas StatCard a contener.
+- className / style [Opcional]: Estilos o clases para el grid responsivo (auto-fit minmax 220px).
+
+EJEMPLO DE IMPLEMENTACIÓN:
+```tsx
+import { Wallet, CheckCircle2, Building2, Users } from "lucide-react";
+import { StatGrid, StatCard, fmt } from "../../components/common";
+
+<StatGrid>
+  <StatCard
+    label="Fondo Total Activo"
+    value={fmt(59000)}
+    subtitle="En fondos operativos en sucursales"
+    icon={Wallet}
+    color="accent"
+  />
+  <StatCard
+    label="Cajas Chicas Activas"
+    value={14}
+    valueColor="success"
+    subtitle="De 16 registradas en el catálogo"
+    icon={CheckCircle2}
+    color="success"
+  />
+  <StatCard
+    label="Promedio por Caja"
+    value={fmt(4214.29)}
+    subtitle="Por sucursal con caja abierta"
+    icon={Building2}
+    color="teal"
+  />
+  <StatCard
+    label="Custodios Asignados"
+    value={14}
+    valueColor="purple"
+    subtitle="Empleados con asignación de fondo"
+    icon={Users}
+    color="purple"
+  />
+</StatGrid>
+```
+
+
+================================================================================
+2. COMPONENTE: StatusBadge (Badges de Estado Tipo Píldora)
+================================================================================
+Archivo: frontend/src/components/common/StatusBadge.tsx
+
+DESCRIPCIÓN:
+Insignia semántica tipo píldora redondeada (border-radius 9999px) con indicador 
+de viñeta '●' (activo / gasto / reposición) u '○' (inactivo / anulado), fondo suave con 
+transparencia del 12%-14% y texto en negrita según el estado del registro.
+
+MAPEO AUTOMÁTICO DE ESTADOS:
+- "ACTIVA" | "A"           -> Fondo verde menta, texto verde (#10b981), símbolo '● ACTIVA'
+- "INACTIVA" | "I"         -> Fondo rojo pastel, texto rojo (#ef4444), símbolo '○ INACTIVA'
+- "GASTO"                  -> Fondo rojo pastel, texto rojo (#dc2626), símbolo '● GASTO'
+- "REPOSICION" | "REPOSICIÓN" -> Fondo verde menta, texto verde (#059669), símbolo '● REPOSICIÓN'
+- "ANULADO" | "ANULADA"    -> Fondo gris neutro, texto gris (#64748b), símbolo '○ ANULADO'
+- "PENDIENTE"              -> Fondo ámbar pastel, texto naranja (#d97706), símbolo '● PENDIENTE'
+
+PROPIEDADES (PROPS):
+- status (string) [Obligatorio]: Código o texto del estado.
+- label (string) [Opcional]: Texto alternativo a mostrar.
+- dot (boolean) [Opcional]: Mostrar viñeta '●' u '○' (Default: true).
+- color ("success" | "danger" | "warning" | "neutral" | "accent" | "purple") [Opcional]: Sobrescribir color automático.
+
+EJEMPLO DE IMPLEMENTACIÓN:
+```tsx
+import { StatusBadge } from "../../components/common";
+
+<StatusBadge status="ACTIVA" />
+<StatusBadge status="INACTIVA" />
+<StatusBadge status="GASTO" />
+<StatusBadge status="REPOSICION" />
+<StatusBadge status="ANULADO" />
+```
+
+
+================================================================================
+3. COMPONENTE: Pagination
+================================================================================
+Archivo: frontend/src/components/common/Pagination.tsx
+
+DESCRIPCIÓN:
+Componente modular que centraliza la navegación por páginas, selector de 
+registros por página (10, 15, 20, 25, 30), indicador de rango ("Mostrando X a Y de Z") 
+y botones Anterior/Siguiente con estados deshabilitados automáticos.
+
+PROPIEDADES (PROPS):
+- paginaActual (number) [Obligatorio]: Número de la página activa (1-indexed).
+- totalPaginas (number) [Obligatorio]: Total de páginas calculadas.
+- totalRegistros (number) [Obligatorio]: Total de registros totales o filtrados.
+- limitePorPagina (number) [Obligatorio]: Cantidad de elementos por página.
+- onCambioPagina ((pagina: number) => void) [Obligatorio]: Callback al cambiar de página.
+- onCambioLimite ((nuevoLimite: number) => void) [Opcional]: Callback al cambiar selector de límite.
+- opcionesLimite (number[]) [Opcional]: Array de opciones (Default: [10, 15, 20, 25, 30]).
+- etiquetaRegistros (string) [Opcional]: Nombre de la entidad (Default: "registros").
+- loading (boolean) [Opcional]: Deshabilita los botones durante cargas activas.
+
+EJEMPLO DE IMPLEMENTACIÓN:
+```tsx
+const [paginaActual, setPaginaActual] = useState(1);
+const [limitePorPagina, setLimitePorPagina] = useState(10);
+
+const totalRegistros = datosFiltrados.length;
+const totalPaginas = Math.ceil(totalRegistros / limitePorPagina) || 1;
+
+// Segmento paginado visible en la tabla:
+const datosPaginados = useMemo(() => {
+  const inicio = (paginaActual - 1) * limitePorPagina;
+  return datosFiltrados.slice(inicio, inicio + limitePorPagina);
+}, [datosFiltrados, paginaActual, limitePorPagina]);
+
+return (
+  <Pagination
+    paginaActual={paginaActual}
+    totalPaginas={totalPaginas}
+    totalRegistros={totalRegistros}
+    limitePorPagina={limitePorPagina}
+    onCambioPagina={setPaginaActual}
+    onCambioLimite={(limite) => {
+      setLimitePorPagina(limite);
+      setPaginaActual(1);
+    }}
+    loading={loading}
+    etiquetaRegistros="movimientos"
+  />
+);
+```
+
+
+================================================================================
+4. COMPONENTE: TableSearchBar
+================================================================================
+Archivo: frontend/src/components/common/TableSearchBar.tsx
+
+DESCRIPCIÓN:
+Barra de herramientas compacta y unificada en una sola línea horizontal. Incluye:
+- Input de búsqueda con ícono de lupa y botón para limpiar (X).
+- Ranura derecha para filtros personalizados (ej. FilterDropdown).
+- Banner flotante automático de retroalimentación de búsqueda con contador de coincidencias y botón de reset rápido.
+
+PROPIEDADES (PROPS):
+- searchTerm (string) [Obligatorio]: Término de búsqueda actual.
+- onSearchChange ((term: string) => void) [Obligatorio]: Callback al escribir.
+- placeholder (string) [Opcional]: Placeholder del input (Default: "Buscar...").
+- filters (ReactNode) [Opcional]: Elementos de filtrado a la derecha.
+- totalResults (number) [Opcional]: Total de registros antes de filtrar.
+- filteredResults (number) [Opcional]: Total de registros resultantes.
+
+EJEMPLO DE IMPLEMENTACIÓN:
+```tsx
+<TableSearchBar
+  searchTerm={searchTerm}
+  onSearchChange={setSearchTerm}
+  placeholder="Buscar por ID, sucursal, concepto..."
+  filters={
+    <FilterDropdown
+      label="Tipo"
+      options={[
+        { key: "GASTO", label: "Gastos", count: 12 },
+        { key: "REPOSICION", label: "Reposiciones", count: 4 },
+      ]}
+      value={tipoFiltro}
+      onChange={setTipoFiltro}
+      allOptionKey="TODOS"
+      allOptionLabel="Todos los tipos"
+    />
+  }
+  totalResults={datos.length}
+  filteredResults={datosFiltrados.length}
+/>
+```
+
+
+================================================================================
+5. COMPONENTE: FilterDropdown
+================================================================================
+Archivo: frontend/src/components/common/FilterDropdown.tsx
+
+DESCRIPCIÓN:
+Menú desplegable tipo popover para filtros de tabla con buscador interno integrado, 
+indicadores de conteo por categoría y opción de "Todos".
+
+PROPIEDADES (PROPS):
+- label (string) [Obligatorio]: Etiqueta del botón disparador.
+- options (Array<{ key: T; label: string; count?: number }>) [Obligatorio]: Lista de opciones.
+- value (T) [Obligatorio]: Valor actualmente seleccionado.
+- onChange ((value: T) => void) [Obligatorio]: Callback al elegir una opción.
+- allOptionKey (T) [Opcional]: Clave para la opción general (Default: "TODOS").
+- allOptionLabel (string) [Opcional]: Etiqueta de la opción general.
+- totalCount (number) [Opcional]: Cantidad total para la opción general.
+- searchPlaceholder (string) [Opcional]: Placeholder del buscador interno.
+
+EJEMPLO DE IMPLEMENTACIÓN:
+```tsx
+<FilterDropdown<string>
+  label="Estado"
+  options={[
+    { key: "A", label: "Activas", count: 14 },
+    { key: "I", label: "Inactivas", count: 2 },
+  ]}
+  value={filtroEstado}
+  onChange={setFiltroEstado}
+  allOptionKey="TODAS"
+  allOptionLabel="Todas las cajas"
+  totalCount={16}
+/>
+```
+
+
+================================================================================
+6. COMPONENTE: HintTooltip
+================================================================================
+Archivo: frontend/src/components/common/HintTooltip.tsx
+
+DESCRIPCIÓN:
+Icono circular interactivo de ayuda con signo de interrogación (?). Al pasar el cursor 
+por encima (hover) o enfocarlo por teclado, muestra un globo emergente flotante 
+oscuro con flecha apuntadora que explica la función del campo.
+
+PROPIEDADES (PROPS):
+- text (string) [Obligatorio]: Mensaje explicativo a mostrar.
+- position ("top" | "bottom" | "left" | "right") [Opcional]: Posición del globo (Default: "top").
+- size (number) [Opcional]: Tamaño del ícono en px (Default: 14).
+
+EJEMPLO DE IMPLEMENTACIÓN:
+```tsx
+<div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+  <span>Monto en Quetzales</span>
+  <HintTooltip text="Importe exacto del movimiento. No puede exceder el saldo disponible." />
+</div>
+```
+
+
+================================================================================
+7. COMPONENTE: GuideBanner
+================================================================================
+Archivo: frontend/src/components/common/GuideBanner.tsx
+
+DESCRIPCIÓN:
+Banner instructivo de primeros pasos colapsable y dinámico. Presenta pasos numerados (1, 2, 3) 
+con botón para ocultar o mostrar el banner a voluntad.
+
+PROPIEDADES (PROPS):
+- title (string) [Obligatorio]: Título del banner.
+- steps (Array<{ number: string; title: string; description: string }>) [Obligatorio]: Pasos del flujo.
+- visible (boolean) [Opcional]: Estado de visibilidad (Default: true).
+- onToggle ((visible: boolean) => void) [Opcional]: Callback al abrir o cerrar.
+
+EJEMPLO DE IMPLEMENTACIÓN:
+```tsx
+const [showGuide, setShowGuide] = useState(true);
+
+<GuideBanner
+  title="Primeros Pasos: Flujo de Movimientos de Caja Chica"
+  visible={showGuide}
+  onToggle={setShowGuide}
+  steps={[
+    {
+      number: "1",
+      title: "Selecciona la Caja y Operación",
+      description: "Elige la caja chica asignada y el tipo de movimiento (GASTO o REPOSICIÓN)."
+    },
+    {
+      number: "2",
+      title: "Detalla Concepto y Monto",
+      description: "Indica la justificación clara y el importe en Quetzales sin exceder los fondos."
+    },
+    {
+      number: "3",
+      title: "Adjunta Comprobante",
+      description: "Registra el número de vale físico, recibo o factura de respaldo contable."
+    }
+  ]}
+/>
+```
+
+
+================================================================================
+8. COMPONENTE: SearchableSelect (con Iconos Integrados)
+================================================================================
+Archivo: frontend/src/components/common/SearchableSelect.tsx
+
+DESCRIPCIÓN:
+Selector inteligente tipo combobox con búsqueda predictiva interna en tiempo real, 
+soporte de íconos temáticos en opciones y trigger, tooltip emergente (?) en la etiqueta 
+y formato en dos líneas (código/nombre y detalle).
+
+PROPIEDADES (PROPS):
+- label (string) [Obligatorio]: Etiqueta del campo.
+- value (number | string) [Obligatorio]: ID o clave seleccionada.
+- options (SelectOption[]) [Obligatorio]: Opciones a desplegar.
+  * id (number | string): Identificador único.
+  * codigo (string) [Opcional]: Código tipo badge (ej. "SUC-001").
+  * nombre (string): Nombre principal.
+  * detalle (string) [Opcional]: Texto descriptivo secundario.
+  * icon (LucideIcon | ReactNode) [Opcional]: Ícono a desplegar junto al elemento.
+- onChange ((val: number | string) => void) [Obligatorio]: Callback de selección.
+- tooltip (string) [Opcional]: Hint en hover sobre '?'.
+- required / disabled / error [Opcionales].
+
+EJEMPLO DE IMPLEMENTACIÓN:
+```tsx
+import { Building2 } from "lucide-react";
+import { SearchableSelect } from "../../components/common";
+
+const sucursales = [
+  {
+    id: 1,
+    codigo: "SUC-001",
+    nombre: "Sucursal Central Zona 1",
+    detalle: "Fondo Asignado: Q 5,000.00",
+    icon: Building2
+  }
+];
+
+<SearchableSelect
+  label="Sucursal / Caja Chica"
+  value={cajaSeleccionada}
+  options={sucursales}
+  onChange={(val) => setCajaSeleccionada(Number(val))}
+  tooltip="Selecciona la caja chica correspondiente a la sucursal que emite el gasto."
+  required
+/>
+```
+
+
+================================================================================
+9. COMPONENTE: FormField (con HintTooltip Integrado)
+================================================================================
+Archivo: frontend/src/components/common/FormField.tsx
+
+DESCRIPCIÓN:
+Campo universal de entrada de texto, números o fechas, con soporte automático de 
+tooltip '?' en la etiqueta (evitando textos inferiores saturantes), borde rojo en caso 
+de error y estado de solo lectura.
+
+PROPIEDADES (PROPS):
+- label (string) [Obligatorio]: Etiqueta del campo.
+- tooltip (string) [Opcional]: Muestra el ícono '?' con tooltip en hover.
+- error (string) [Opcional]: Mensaje de error en color rojo.
+- required / disabled / readOnly [Opcionales].
+
+EJEMPLO DE IMPLEMENTACIÓN:
+```tsx
+<FormField
+  label="Monto del Movimiento (Q)"
+  type="number"
+  value={monto}
+  onChange={(e) => setMonto(e.target.value)}
+  tooltip="Importe en Quetzales del gasto o reposición sin exceder el saldo disponible."
+  placeholder="0.00"
+  required
+/>
+```
+
+================================================================================
+FIN DE LA DOCUMENTACIÓN
+================================================================================
